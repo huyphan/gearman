@@ -392,6 +392,31 @@ gearman_return_t gearman_client_do_low_background(gearman_client_st *client,
                                                   size_t workload_size,
                                                   char *job_handle);
 
+GEARMAN_API
+gearman_return_t gearman_client_broadcast_background(gearman_client_st *client,
+                                              const char *function_name,
+                                              const char *unique,
+                                              const void *workload,
+                                              size_t workload_size,
+                                              char *job_handle);
+
+GEARMAN_API
+gearman_return_t gearman_client_broadcast_high_background(gearman_client_st *client,
+                                              const char *function_name,
+                                              const char *unique,
+                                              const void *workload,
+                                              size_t workload_size,
+                                              char *job_handle);
+
+GEARMAN_API
+gearman_return_t gearman_client_broadcast_low_background(gearman_client_st *client,
+                                              const char *function_name,
+                                              const char *unique,
+                                              const void *workload,
+                                              size_t workload_size,
+                                              char *job_handle);
+
+
 /**
  * Get the status for a backgound job.
  *

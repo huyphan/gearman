@@ -61,7 +61,10 @@ gearman_command_info_st gearman_command_info_list[GEARMAN_COMMAND_MAX]=
   { "SUBMIT_JOB_LOW",     2, true  },
   { "SUBMIT_JOB_LOW_BG",  2, true  },
   { "SUBMIT_JOB_SCHED",   7, true  },
-  { "SUBMIT_JOB_EPOCH",   3, true  }
+  { "SUBMIT_JOB_EPOCH",   3, true  },
+  { "BROADCAST_JOB_BACKGROUND",   2, true  },
+  { "BROADCAST_JOB_LOW_BACKGROUND",   2, true  },
+  { "BROADCAST_JOB_HIGH_BACKGROUND",  2, true  }
 };
 
 inline static gearman_return_t packet_create_arg(gearman_packet_st *packet,

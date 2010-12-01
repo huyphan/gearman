@@ -391,7 +391,49 @@ gearman_return_t gearman_client_do_low_background(gearman_client_st *client,
                                                   size_t workload_size,
                                                   char *job_handle)
 {
-  return _client_do_background(client, GEARMAN_COMMAND_SUBMIT_JOB_LOW_BG,
+  return _client_do_background(client, GEARMAN_COMMAND_BROADCAST_JOB_LOW_BG,
+                               function_name, strlen(function_name),
+                               unique, unique ? strlen(unique) : 0,
+                               workload, workload_size,
+                               job_handle);
+}
+
+gearman_return_t gearman_client_broadcast_background(gearman_client_st *client,
+                                                  const char *function_name,
+                                                  const char *unique,
+                                                  const void *workload,
+                                                  size_t workload_size,
+                                                  char *job_handle)
+{
+  return _client_do_background(client, GEARMAN_COMMAND_BROADCAST_JOB_BG,
+                               function_name, strlen(function_name),
+                               unique, unique ? strlen(unique) : 0,
+                               workload, workload_size,
+                               job_handle);
+}
+
+gearman_return_t gearman_client_broadcast_high_background(gearman_client_st *client,
+                                                  const char *function_name,
+                                                  const char *unique,
+                                                  const void *workload,
+                                                  size_t workload_size,
+                                                  char *job_handle)
+{
+  return _client_do_background(client, GEARMAN_COMMAND_BROADCAST_JOB_HIGH_BG,
+                               function_name, strlen(function_name),
+                               unique, unique ? strlen(unique) : 0,
+                               workload, workload_size,
+                               job_handle);
+}
+
+gearman_return_t gearman_client_broadcast_low_background(gearman_client_st *client,
+                                                  const char *function_name,
+                                                  const char *unique,
+                                                  const void *workload,
+                                                  size_t workload_size,
+                                                  char *job_handle)
+{
+  return _client_do_background(client, GEARMAN_COMMAND_BROADCAST_JOB_LOW_BG,
                                function_name, strlen(function_name),
                                unique, unique ? strlen(unique) : 0,
                                workload, workload_size,
@@ -1155,7 +1197,10 @@ static gearman_return_t _client_run_task(gearman_client_st *client,
 
       if (task->send.command == GEARMAN_COMMAND_SUBMIT_JOB_BG ||
           task->send.command == GEARMAN_COMMAND_SUBMIT_JOB_HIGH_BG ||
-          task->send.command == GEARMAN_COMMAND_SUBMIT_JOB_LOW_BG)
+          task->send.command == GEARMAN_COMMAND_SUBMIT_JOB_LOW_BG || 
+          task->send.command == GEARMAN_COMMAND_BROADCAST_JOB_BG ||
+          task->send.command == GEARMAN_COMMAND_BROADCAST_JOB_HIGH_BG ||
+          task->send.command == GEARMAN_COMMAND_BROADCAST_JOB_LOW_BG)
       {
         break;
       }
@@ -1383,7 +1428,6 @@ static gearman_return_t _client_do_background(gearman_client_st *client,
     client->new_tasks= 0;
     client->running_tasks= 0;
   }
-
   return ret;
 }
 

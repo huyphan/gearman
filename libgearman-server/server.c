@@ -251,14 +251,19 @@ gearman_return_t gearman_server_run_command(gearman_server_con_st *server_con,
   case GEARMAN_COMMAND_SUBMIT_JOB_HIGH_BG:
   case GEARMAN_COMMAND_SUBMIT_JOB_LOW:
   case GEARMAN_COMMAND_SUBMIT_JOB_LOW_BG:
+  case GEARMAN_COMMAND_BROADCAST_JOB_BG:
+  case GEARMAN_COMMAND_BROADCAST_JOB_LOW_BG:
+  case GEARMAN_COMMAND_BROADCAST_JOB_HIGH_BG:
 
     if (packet->command == GEARMAN_COMMAND_SUBMIT_JOB ||
-        packet->command == GEARMAN_COMMAND_SUBMIT_JOB_BG)
+        packet->command == GEARMAN_COMMAND_SUBMIT_JOB_BG ||
+        packet->command == GEARMAN_COMMAND_BROADCAST_JOB_BG)
     {
       priority= GEARMAN_JOB_PRIORITY_NORMAL;
     }
     else if (packet->command == GEARMAN_COMMAND_SUBMIT_JOB_HIGH ||
-             packet->command == GEARMAN_COMMAND_SUBMIT_JOB_HIGH_BG)
+             packet->command == GEARMAN_COMMAND_SUBMIT_JOB_HIGH_BG ||
+             packet->command == GEARMAN_COMMAND_BROADCAST_JOB_HIGH_BG)
     {
       priority= GEARMAN_JOB_PRIORITY_HIGH;
     }
@@ -267,7 +272,10 @@ gearman_return_t gearman_server_run_command(gearman_server_con_st *server_con,
 
     if (packet->command == GEARMAN_COMMAND_SUBMIT_JOB_BG ||
         packet->command == GEARMAN_COMMAND_SUBMIT_JOB_HIGH_BG ||
-        packet->command == GEARMAN_COMMAND_SUBMIT_JOB_LOW_BG)
+        packet->command == GEARMAN_COMMAND_SUBMIT_JOB_LOW_BG ||
+        packet->command == GEARMAN_COMMAND_BROADCAST_JOB_BG ||
+        packet->command == GEARMAN_COMMAND_BROADCAST_JOB_HIGH_BG ||
+        packet->command == GEARMAN_COMMAND_BROADCAST_JOB_LOW_BG)
     {
       server_client= NULL;
     }
@@ -278,14 +286,67 @@ gearman_return_t gearman_server_run_command(gearman_server_con_st *server_con,
         return GEARMAN_MEMORY_ALLOCATION_FAILURE;
     }
 
-    /* Create a job. */
-    server_job= gearman_server_job_add(server_con->thread->server,
-                                       (char *)(packet->arg[0]),
-                                       packet->arg_size[0] - 1,
-                                       (char *)(packet->arg[1]),
-                                       packet->arg_size[1] - 1, packet->data,
-                                       packet->data_size, priority,
-                                       server_client, &ret);
+    if (packet->command == GEARMAN_COMMAND_BROADCAST_JOB_BG ||
+        packet->command == GEARMAN_COMMAND_BROADCAST_JOB_HIGH_BG ||
+        packet->command == GEARMAN_COMMAND_BROADCAST_JOB_LOW_BG)
+    {
+      gearman_server_function_st *function;
+      gearman_server_worker_st *server_worker;
+
+      for (function= server->function_list; function != NULL;
+           function= function->next)
+      {
+        if (!strncmp(function->function_name,(char *)(packet->arg[0]),packet->arg_size[0] - 1))
+        {
+          if (function->worker_count > 0)
+          {
+            server_worker= function->worker_list;
+            server_job= gearman_server_job_add_specific_worker(server_con->thread->server, server_worker->con->con.fd,
+                                         (char *)(packet->arg[0]),
+                                         packet->arg_size[0] - 1,
+                                         (char *)(packet->arg[1]),
+                                         packet->arg_size[1] - 1, packet->data,
+                                         packet->data_size, priority,
+                                         server_client, &ret);
+            if ( (ret == GEARMAN_SUCCESS) && (function->worker_count > 1) )
+            {
+              int i;
+              server_worker = server_worker->function_next;
+              for (i=1;i<function->worker_count;
+                   i++, server_worker= server_worker->function_next)
+              {
+                uuid_t uuid;
+                char uuid_string[37];
+                uuid_generate(uuid);
+                uuid_unparse(uuid, uuid_string);
+                uuid_string[36]= 0;
+                void *data = (void *)malloc(packet->data_size);
+                memcpy(data, packet->data, packet->data_size);
+                server_job= gearman_server_job_add_specific_worker(server_con->thread->server, server_worker->con->con.fd,
+                                             (char *)(packet->arg[0]),
+                                             packet->arg_size[0] - 1,
+                                             uuid_string,
+                                             36, data,
+                                             packet->data_size, priority,
+                                             server_client, &ret);
+              }
+            }
+          }
+        }
+      }
+    }
+    else
+    {
+      /* Create a job. */
+      server_job= gearman_server_job_add(server_con->thread->server,
+		  							   (char *)(packet->arg[0]),
+										   packet->arg_size[0] - 1,
+										   (char *)(packet->arg[1]),
+										   packet->arg_size[1] - 1, packet->data,
+										   packet->data_size, priority,
+										   server_client, &ret);
+    }
+
     if (ret == GEARMAN_SUCCESS)
     {
       packet->options.free_data= false;

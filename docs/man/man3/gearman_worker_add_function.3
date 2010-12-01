@@ -1,0 +1,41 @@
+.TH gearman_worker_add_function 3 2010-06-30 "Gearman" "Gearman"
+.SH NAME
+gearman_worker_add_function \- Worker Declarations
+.SH SYNOPSIS
+.B #include <libgearman/gearman.h>
+.sp
+.BI " gearman_return_t gearman_worker_add_function(gearman_worker_st " *worker ",  const char " *function_name ",  uint32_t " timeout ",  gearman_worker_fn " *function ",  void *context);"
+.SH DESCRIPTION
+Register and add callback function for worker. To remove functions that have
+been added, call gearman_worker_unregister() or
+gearman_worker_unregister_all().
+*
+.SH PARAMETERS
+.TP
+.BR 
+[in] worker Structure previously initialized with
+gearman_worker_create() or gearman_worker_clone().
+.TP
+.BR 
+[in] function_name Function name to register.
+.TP
+.BR 
+[in] timeout Optional timeout (in seconds) that specifies the maximum
+time a job should. This is enforced on the job server. A value of 0 means
+an infinite time.
+.TP
+.BR 
+[in] function Function to run when there is a job ready.
+.TP
+.BR 
+[in] context Argument to pass into the callback function.
+.SH "RETURN VALUE"
+Standard gearman return value.
+.SH "SEE ALSO"
+The Gearman homepage: http://www.gearman.org/
+.SH BUGS
+Bugs should be reported at https://bugs.launchpad.net/gearmand
+.SH COPYING
+Copyright (C) 2008 Brian Aker, Eric Day. All rights reserved.
+
+Use and distribution licensed under the BSD license. See the COPYING file in the original source for full text.

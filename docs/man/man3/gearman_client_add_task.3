@@ -1,0 +1,47 @@
+.TH gearman_client_add_task 3 2010-06-30 "Gearman" "Gearman"
+.SH NAME
+gearman_client_add_task \- Concurrent Task Interface
+.SH SYNOPSIS
+.B #include <libgearman/gearman.h>
+.sp
+.BI " gearman_task_st *gearman_client_add_task(gearman_client_st " *client ",  gearman_task_st " *task ",  void " *context ",  const char " *function_name ",  const char " *unique ",  const void " *workload ",  size_t " workload_size ",  gearman_return_t *ret_ptr);"
+.SH DESCRIPTION
+Add a task to be run in parallel.
+*
+.SH PARAMETERS
+.TP
+.BR 
+[in] client Structure previously initialized with
+gearman_client_create() or gearman_client_clone().
+.TP
+.BR 
+[in] task Caller allocated structure, or NULL to allocate one.
+.TP
+.BR 
+[in] context Application context to associate with the task.
+.TP
+.BR 
+[in] function_name The name of the function to run.
+.TP
+.BR 
+[in] unique Optional unique job identifier, or NULL for a new UUID.
+.TP
+.BR 
+[in] workload The workload to pass to the function when it is run.
+.TP
+.BR 
+[in] workload_size Size of the workload.
+.TP
+.BR 
+[out] ret_ptr Standard gearman return value.
+.SH "RETURN VALUE"
+On success, a pointer to the (possibly allocated) structure. On
+failure this will be NULL.
+.SH "SEE ALSO"
+The Gearman homepage: http://www.gearman.org/
+.SH BUGS
+Bugs should be reported at https://bugs.launchpad.net/gearmand
+.SH COPYING
+Copyright (C) 2008 Brian Aker, Eric Day. All rights reserved.
+
+Use and distribution licensed under the BSD license. See the COPYING file in the original source for full text.

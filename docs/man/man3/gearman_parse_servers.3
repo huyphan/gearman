@@ -1,0 +1,30 @@
+.TH gearman_parse_servers 3 2010-06-30 "Gearman" "Gearman"
+.SH NAME
+gearman_parse_servers \- Gearman Declarations
+.SH SYNOPSIS
+.B #include <libgearman/gearman.h>
+.sp
+.BI " gearman_return_t gearman_parse_servers(const char " *servers ",  gearman_parse_server_fn " *callback ",  void *context);"
+.SH DESCRIPTION
+Utility function used for parsing server lists.
+*
+.SH PARAMETERS
+.TP
+.BR 
+[in] servers String containing a list of servers to parse.
+.TP
+.BR 
+[in] callback Function to call for each server that is found.
+.TP
+.BR 
+[in] context Argument to pass along with callback function.
+.SH "RETURN VALUE"
+Standard Gearman return value.
+.SH "SEE ALSO"
+The Gearman homepage: http://www.gearman.org/
+.SH BUGS
+Bugs should be reported at https://bugs.launchpad.net/gearmand
+.SH COPYING
+Copyright (C) 2008 Brian Aker, Eric Day. All rights reserved.
+
+Use and distribution licensed under the BSD license. See the COPYING file in the original source for full text.

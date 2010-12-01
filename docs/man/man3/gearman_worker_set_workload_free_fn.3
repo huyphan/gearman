@@ -1,0 +1,31 @@
+.TH gearman_worker_set_workload_free_fn 3 2010-06-30 "Gearman" "Gearman"
+.SH NAME
+gearman_worker_set_workload_free_fn \- Worker Declarations
+.SH SYNOPSIS
+.B #include <libgearman/gearman.h>
+.sp
+.BI " void gearman_worker_set_workload_free_fn(gearman_worker_st " *worker ",  gearman_free_fn " *function ",  void *context);"
+.SH DESCRIPTION
+Set custom memory free function for workloads. Normally gearman uses the
+standard system free to free memory used with workloads. The provided
+function will be used instead.
+*
+.SH PARAMETERS
+.TP
+.BR 
+[in] gearman Structure previously initialized with gearman_universal_create() or
+gearman_clone().
+.TP
+.BR 
+[in] function Memory free function to use instead of free().
+.TP
+.BR 
+[in] context Argument to pass into the callback function.
+.SH "SEE ALSO"
+The Gearman homepage: http://www.gearman.org/
+.SH BUGS
+Bugs should be reported at https://bugs.launchpad.net/gearmand
+.SH COPYING
+Copyright (C) 2008 Brian Aker, Eric Day. All rights reserved.
+
+Use and distribution licensed under the BSD license. See the COPYING file in the original source for full text.

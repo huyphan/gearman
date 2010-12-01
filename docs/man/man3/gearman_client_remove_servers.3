@@ -1,0 +1,23 @@
+.TH gearman_client_remove_servers 3 2010-06-30 "Gearman" "Gearman"
+.SH NAME
+gearman_client_remove_servers \- Client Declarations
+.SH SYNOPSIS
+.B #include <libgearman/gearman.h>
+.sp
+.BI " void gearman_client_remove_servers(gearman_client_st *client);"
+.SH DESCRIPTION
+Remove all servers currently associated with the client.
+*
+.SH PARAMETERS
+.TP
+.BR 
+[in] client Structure previously initialized with
+gearman_client_create() or gearman_client_clone().
+.SH "SEE ALSO"
+The Gearman homepage: http://www.gearman.org/
+.SH BUGS
+Bugs should be reported at https://bugs.launchpad.net/gearmand
+.SH COPYING
+Copyright (C) 2008 Brian Aker, Eric Day. All rights reserved.
+
+Use and distribution licensed under the BSD license. See the COPYING file in the original source for full text.

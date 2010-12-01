@@ -1,0 +1,23 @@
+.TH gearman_worker_remove_servers 3 2010-06-30 "Gearman" "Gearman"
+.SH NAME
+gearman_worker_remove_servers \- Worker Declarations
+.SH SYNOPSIS
+.B #include <libgearman/gearman.h>
+.sp
+.BI " void gearman_worker_remove_servers(gearman_worker_st *worker);"
+.SH DESCRIPTION
+Remove all servers currently associated with the worker.
+*
+.SH PARAMETERS
+.TP
+.BR 
+[in] worker Structure previously initialized with
+gearman_worker_create() or gearman_worker_clone().
+.SH "SEE ALSO"
+The Gearman homepage: http://www.gearman.org/
+.SH BUGS
+Bugs should be reported at https://bugs.launchpad.net/gearmand
+.SH COPYING
+Copyright (C) 2008 Brian Aker, Eric Day. All rights reserved.
+
+Use and distribution licensed under the BSD license. See the COPYING file in the original source for full text.

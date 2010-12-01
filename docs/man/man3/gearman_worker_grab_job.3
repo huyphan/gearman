@@ -1,0 +1,35 @@
+.TH gearman_worker_grab_job 3 2010-06-30 "Gearman" "Gearman"
+.SH NAME
+gearman_worker_grab_job \- Worker Declarations
+.SH SYNOPSIS
+.B #include <libgearman/gearman.h>
+.sp
+.BI " gearman_job_st *gearman_worker_grab_job(gearman_worker_st " *worker ",  gearman_job_st " *job ",  gearman_return_t *ret_ptr);"
+.SH DESCRIPTION
+Get a job from one of the job servers. This does not used the callback
+interface below, which means results must be sent back to the job server
+manually. It is also the responsibility of the caller to free the job once
+it has been completed.
+*
+.SH PARAMETERS
+.TP
+.BR 
+[in] worker Structure previously initialized with
+gearman_worker_create() or gearman_worker_clone().
+.TP
+.BR 
+[in] job Caller allocated structure, or NULL to allocate one.
+.TP
+.BR 
+[out] ret_ptr Standard gearman return value.
+.SH "RETURN VALUE"
+On success, a pointer to the (possibly allocated) structure. On
+failure this will be NULL.
+.SH "SEE ALSO"
+The Gearman homepage: http://www.gearman.org/
+.SH BUGS
+Bugs should be reported at https://bugs.launchpad.net/gearmand
+.SH COPYING
+Copyright (C) 2008 Brian Aker, Eric Day. All rights reserved.
+
+Use and distribution licensed under the BSD license. See the COPYING file in the original source for full text.

@@ -1,0 +1,26 @@
+.TH gearman_worker_remove_options 3 2010-06-30 "Gearman" "Gearman"
+.SH NAME
+gearman_worker_remove_options \- Worker Declarations
+.SH SYNOPSIS
+.B #include <libgearman/gearman.h>
+.sp
+.BI " void gearman_worker_remove_options(gearman_worker_st " *worker ",  gearman_worker_options_t options);"
+.SH DESCRIPTION
+Remove options for a worker structure.
+*
+.SH PARAMETERS
+.TP
+.BR 
+[in] worker Structure previously initialized with
+gearman_worker_create() or gearman_worker_clone().
+.TP
+.BR options
+Available options for worker structures.
+.SH "SEE ALSO"
+The Gearman homepage: http://www.gearman.org/
+.SH BUGS
+Bugs should be reported at https://bugs.launchpad.net/gearmand
+.SH COPYING
+Copyright (C) 2008 Brian Aker, Eric Day. All rights reserved.
+
+Use and distribution licensed under the BSD license. See the COPYING file in the original source for full text.

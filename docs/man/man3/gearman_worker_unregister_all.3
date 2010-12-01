@@ -1,0 +1,25 @@
+.TH gearman_worker_unregister_all 3 2010-06-30 "Gearman" "Gearman"
+.SH NAME
+gearman_worker_unregister_all \- Worker Declarations
+.SH SYNOPSIS
+.B #include <libgearman/gearman.h>
+.sp
+.BI " gearman_return_t gearman_worker_unregister_all(gearman_worker_st *worker);"
+.SH DESCRIPTION
+Unregister all functions with job servers.
+*
+.SH PARAMETERS
+.TP
+.BR 
+[in] worker Structure previously initialized with
+gearman_worker_create() or gearman_worker_clone().
+.SH "RETURN VALUE"
+Standard gearman return value.
+.SH "SEE ALSO"
+The Gearman homepage: http://www.gearman.org/
+.SH BUGS
+Bugs should be reported at https://bugs.launchpad.net/gearmand
+.SH COPYING
+Copyright (C) 2008 Brian Aker, Eric Day. All rights reserved.
+
+Use and distribution licensed under the BSD license. See the COPYING file in the original source for full text.

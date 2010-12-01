@@ -1,0 +1,30 @@
+.TH gearman_worker_function_exist 3 2010-06-30 "Gearman" "Gearman"
+.SH NAME
+gearman_worker_function_exist \- Worker Declarations
+.SH SYNOPSIS
+.B #include <libgearman/gearman.h>
+.sp
+.BI " bool gearman_worker_function_exist(gearman_worker_st " *worker ",  const char " *function_name ",  size_t function_length);"
+.SH DESCRIPTION
+See if a function exists in the server. It will not return
+true if the function is currently being de-allocated.
+.SH PARAMETERS
+.TP
+.BR 
+[in] worker gearman_worker_st that will be used.
+.TP
+.BR 
+[in] function_name Function name for search.
+.TP
+.BR 
+[in] function_length Length of function name.
+.SH "RETURN VALUE"
+bool
+.SH "SEE ALSO"
+The Gearman homepage: http://www.gearman.org/
+.SH BUGS
+Bugs should be reported at https://bugs.launchpad.net/gearmand
+.SH COPYING
+Copyright (C) 2008 Brian Aker, Eric Day. All rights reserved.
+
+Use and distribution licensed under the BSD license. See the COPYING file in the original source for full text.
